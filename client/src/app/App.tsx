@@ -12,9 +12,7 @@ import { Person } from './person/person.interface'
 import { unwrapResult } from './result'
 
 export function App(): JSX.Element {
-  const peopleQuery = useQuery(['people'], async () =>
-    unwrapResult(await getPeople())
-  )
+  const peopleQuery = useGetPeopleQuery()
 
   const { order, experience, name, onToggleOrder, onChangeFilters } =
     useFilters()
@@ -109,4 +107,8 @@ function useFilters() {
     onToggleOrder: handleToggleOrder,
     onChangeFilters: handleChangeFilters
   }
+}
+
+function useGetPeopleQuery() {
+  return useQuery(['people'], async () => unwrapResult(await getPeople()))
 }
