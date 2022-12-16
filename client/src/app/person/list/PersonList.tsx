@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import { PersonCard } from '../card/PersonCard'
-import { Order } from '../OrderAndFilters/OrderField'
 import { Person } from '../person.interface'
 import { PersonListHeader } from './PersonListHeader'
 

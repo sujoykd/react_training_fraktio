@@ -6,18 +6,17 @@ import { Person } from '../person.interface'
 type Props = { person: Person }
 
 export function PersonCard({ person }: Props): JSX.Element {
+  const name = `${person.lastName}, ${person.firstName}`
   return (
     <Container>
       <Avatar
-        name={`${person.lastName}, ${person.firstName}`}
+        name={name}
         uri={person.avatar}
         key={person.uuid}
       />
 
       <About>
-        <Title>
-          {person.lastName}, {person.firstName}
-        </Title>
+        <Title>{name}</Title>
         <Experience years={person.experience}></Experience>
         <Email>{person.email}</Email>
       </About>
