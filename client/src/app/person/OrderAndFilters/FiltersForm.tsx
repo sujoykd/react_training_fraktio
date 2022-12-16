@@ -9,11 +9,11 @@ export type Data = {
 }
 
 type Props = {
-  handleFitlerChange: (e: number, n: string) => void
+  onChangeFilters: (e: number, n: string) => void
 } & Data
 
 export function FiltersForm({
-  handleFitlerChange,
+  onChangeFilters,
   experience,
   name
 }: Props): JSX.Element {
@@ -25,7 +25,7 @@ export function FiltersForm({
   })
 
   const handleSubmit = (data: Data) => {
-    handleFitlerChange(data.experience ?? 0, data.name ?? '')
+    onChangeFilters(data.experience ?? 0, data.name ?? '')
   }
 
   useSubmitOnChange(form, handleSubmit)

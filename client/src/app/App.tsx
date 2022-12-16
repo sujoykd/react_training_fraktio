@@ -1,32 +1,60 @@
-import { useReducer } from 'react'
+import { useReducer, useTransition } from 'react'
+import { useQuery } from 'react-query'
 import { Header } from './layout/Header'
 import { filterPeople } from './pages/IndexPage/filterPeople'
 import { orderPeople } from './pages/orderPeople'
-import { people } from './people'
+import { getPeople } from './pages/personService'
 import { PersonList } from './person/list/PersonList'
+import { PersonListSkeleton } from './person/list/PersonListSkeleton'
 import { OrderAndFilters } from './person/OrderAndFilters/OrderAndFilters'
 import { Order } from './person/OrderAndFilters/OrderField'
 import { Person } from './person/person.interface'
+import { unwrapResult } from './result'
 
 export function App(): JSX.Element {
+  const peopleQuery = useQuery(['people'], async () =>
+    unwrapResult(await getPeople())
+  )
+
   const { order, experience, name, onToggleOrder, onChangeFilters } =
     useFilters()
+
+  const [isPending, startTransition] = useTransition()
+  const handleToggleOrder = () => {
+    startTransition(() => onToggleOrder())
+  }
+
+  const handleChangeFilters = (experience: number, name: string) => {
+    startTransition(() => onChangeFilters(experience, name))
+  }
 
   return (
     <>
       <Header />
       <OrderAndFilters
         order={order}
-        onToggleOrder={onToggleOrder}
-        handleFitlerChange={onChangeFilters}
+        onToggleOrder={handleToggleOrder}
+        onChangeFilters={handleChangeFilters}
         experience={experience}
         name={name}
       />
-      <PersonList
-        people={
-          filterPeople(orderPeople(people, order), experience, name) as Person[]
-        }
-      />
+
+      {peopleQuery.isLoading && <PersonListSkeleton />}
+
+      {peopleQuery.isError && <p>Some error occured. Please try again.</p>}
+
+      {peopleQuery.isSuccess && (
+        <PersonList
+          people={
+            filterPeople(
+              orderPeople(peopleQuery.data?.data.people, order),
+              experience,
+              name
+            ) as Person[]
+          }
+          isUpdating={isPending}
+        />
+      )}
     </>
   )
 }

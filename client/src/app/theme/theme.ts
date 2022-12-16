@@ -95,8 +95,8 @@ const fontFamilies = {
   sans: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif'
 }
 
-function spacing(factor: number): number {
-  return 8 * factor
+function spacing(factor: number): string {
+  return 8 * factor + 'px'
 }
 
 const baseTheme = {

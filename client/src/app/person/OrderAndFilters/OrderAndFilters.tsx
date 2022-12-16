@@ -5,7 +5,7 @@ import { Order, OrderField } from './OrderField'
 type Props = {
   order: Order
   onToggleOrder: () => void
-  handleFitlerChange: (e: number, n: string) => void
+  onChangeFilters: (e: number, n: string) => void
   experience: number
   name: string
 }
@@ -13,7 +13,7 @@ type Props = {
 export function OrderAndFilters({
   order,
   onToggleOrder,
-  handleFitlerChange,
+  onChangeFilters,
   experience,
   name
 }: Props): JSX.Element {
@@ -21,7 +21,7 @@ export function OrderAndFilters({
     <Container>
       <OrderField order={order} onToggleOrder={onToggleOrder} />
       <FiltersForm
-        handleFitlerChange={handleFitlerChange}
+        onChangeFilters={onChangeFilters}
         experience={experience}
         name={name}
       />

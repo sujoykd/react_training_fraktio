@@ -5,14 +5,17 @@ import { PersonListHeader } from './PersonListHeader'
 
 type Props = {
   people: Person[]
+  isUpdating: boolean
 }
 
-export function PersonList({ people }: Props): JSX.Element {
+export function PersonList({ people, isUpdating }: Props): JSX.Element {
   return (
     <div>
       <PersonListHeader
         title="Potential Candidates"
-        description={`Showing ${people.length} people(s)`}
+        description={`Showing ${people.length} people(s) ${
+          isUpdating ? ' ... updating data' : ''
+        }`}
       />
       <ListContainer>
         {people.map((p: any) => (
