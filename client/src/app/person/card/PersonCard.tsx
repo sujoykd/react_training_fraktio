@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { Link } from 'react-router-dom'
 import { Avatar } from '../Avatar/Avatar'
 import { Experience } from '../Experience'
 import { Person } from '../person.interface'
@@ -9,14 +10,12 @@ export function PersonCard({ person }: Props): JSX.Element {
   const name = `${person.lastName}, ${person.firstName}`
   return (
     <Container>
-      <Avatar
-        name={name}
-        uri={person.avatar}
-        key={person.uuid}
-      />
+      <Avatar name={name} uri={person.avatar} key={person.uuid} />
 
       <About>
-        <Title>{name}</Title>
+        <Link to={`/people/${person.uuid}`}>
+          <Title>{name}</Title>
+        </Link>
         <Experience years={person.experience}></Experience>
         <Email>{person.email}</Email>
       </About>

@@ -2,26 +2,48 @@ import { Global, ThemeProvider } from '@emotion/react'
 import { StrictMode } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { BrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import { App } from './App'
 import { DarkModeContext, useDarkMode } from './DarkModeContext'
+import { IndexPage } from './pages/IndexPage/IndexPage'
+import { personLoader, PersonPage } from './pages/PersonPage/PersonPage'
 import { darkTheme, lightTheme } from './theme/theme'
 
 const queryClient = new QueryClient()
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <IndexPage />,
+    errorElement: (
+      <div>
+        <h1>Error!</h1>
+      </div>
+    )
+  },
+  {
+    path: '/people/:id',
+    element: <PersonPage />,
+    loader: personLoader,
+    errorElement: (
+      <div>
+        <h1>Error!</h1>
+        <p>Person not found or some other error occurred</p>
+      </div>
+    )
+  }
+])
+
 export function Root(): JSX.Element {
   return (
     <StrictMode>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <DarkModeContext>
-            <RootWithContext />
+      <QueryClientProvider client={queryClient}>
+        <DarkModeContext>
+          <RootWithContext />
 
-            <ReactQueryDevtools />
-          </DarkModeContext>
-        </QueryClientProvider>
-      </BrowserRouter>
+          <ReactQueryDevtools />
+        </DarkModeContext>
+      </QueryClientProvider>
     </StrictMode>
   )
 }
@@ -52,8 +74,7 @@ function RootWithContext() {
           }
         })}
       />
-
-      <App />
+      <RouterProvider router={router} />
     </ThemeProvider>
   )
 }
