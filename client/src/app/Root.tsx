@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { DarkModeContext, useDarkMode } from './DarkModeContext'
 import { IndexPage } from './pages/IndexPage/IndexPage'
-import { personLoader, PersonPage } from './pages/PersonPage/PersonPage'
+import { loader as personLoader, PersonPage } from './pages/PersonPage/PersonPage'
 import { darkTheme, lightTheme } from './theme/theme'
 
 const queryClient = new QueryClient()

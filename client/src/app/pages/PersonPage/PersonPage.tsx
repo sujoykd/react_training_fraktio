@@ -6,7 +6,7 @@ import { getPerson, GetPersonResponse } from '../personService'
 
 type Person = GetPersonResponse['data']['person']
 
-export const personLoader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   const { id } = params
   invariant(id, 'person id param is missing')
   const result = unwrapResult(await getPerson(id))
