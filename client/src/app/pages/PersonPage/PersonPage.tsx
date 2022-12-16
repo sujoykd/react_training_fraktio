@@ -1,4 +1,4 @@
-import { LoaderFunction, useLoaderData } from 'react-router-dom'
+import { LoaderFunction, useLoaderData, useRouteError } from 'react-router-dom'
 import invariant from 'tiny-invariant'
 import { PersonView } from '../../person/view/PersonView'
 import { unwrapResult } from '../../result'
@@ -16,4 +16,15 @@ export const loader: LoaderFunction = async ({ params }) => {
 export function PersonPage(): JSX.Element {
   const person = useLoaderData() as Person
   return <PersonView person={person} />
+}
+
+export function ErrorBoundary() {
+  let error = useRouteError()
+  console.error(error)
+  return (
+    <div>
+      <h1>Error!</h1>
+      <p>Person not found or some other error occurred</p>
+    </div>
+  )
 }

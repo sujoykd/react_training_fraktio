@@ -6,7 +6,11 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { DarkModeContext, useDarkMode } from './DarkModeContext'
 import { IndexPage } from './pages/IndexPage/IndexPage'
-import { loader as personLoader, PersonPage } from './pages/PersonPage/PersonPage'
+import {
+  ErrorBoundary as PersonPageError,
+  loader as personLoader,
+  PersonPage
+} from './pages/PersonPage/PersonPage'
 import { darkTheme, lightTheme } from './theme/theme'
 
 const queryClient = new QueryClient()
@@ -25,12 +29,7 @@ const router = createBrowserRouter([
     path: '/people/:id',
     element: <PersonPage />,
     loader: personLoader,
-    errorElement: (
-      <div>
-        <h1>Error!</h1>
-        <p>Person not found or some other error occurred</p>
-      </div>
-    )
+    errorElement: <PersonPageError />
   }
 ])
 
